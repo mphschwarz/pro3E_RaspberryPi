@@ -29,3 +29,7 @@ class TestClass(unittest.TestCase):
         data = random_data()
         outfile = src.output.make_html('../output', data, site_name='test_site', plot_name='test_plot')
         self.assertTrue(os.path.isfile(outfile))
+
+    def test_make_table(self):
+        path = '../output'
+        print(src.output.make_table(path))

@@ -7,11 +7,11 @@ void loop() {
     com = Serial.read();
     switch (com){
       case 'x':
-        Serial.write("Test");
+        Serial.write("Test\0");
         break;
-      case 'u': 
-        Serial.write('V');
-        Serial.write('o');
+      case 'u':
+        Serial.write("V\0");
+        Serial.write("o\0");
         break;
       case 'i': 
         Serial.write('A');
