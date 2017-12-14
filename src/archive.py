@@ -61,10 +61,10 @@ def read_data_set(file):
     lines = open(file, 'r').readlines()
     for line in lines:
         time_stamp, voltage, current, total_power, real_power, imag_power = re.findall(read_reg, line)[0]
-        data_set.time_stamp.append(time_stamp)
-        data_set.voltage.append(voltage)
-        data_set.current.append(current)
-        data_set.total_power.append(total_power)
-        data_set.real_power.append(real_power)
-        data_set.imag_power.append(imag_power)
+        data_set.time_stamp.append(float(time_stamp))
+        data_set.voltage.append(float(voltage))
+        data_set.current.append(float(current))
+        data_set.total_power.append(float(total_power))
+        data_set.real_power.append(float(real_power))
+        data_set.imag_power.append(float(imag_power))
     return data_set

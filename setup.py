@@ -2,6 +2,8 @@ from setuptools import setup
 import unittest
 
 # Raspi WiFi config:
+# login: pi
+# pw: blackberry
 # ssid: WiPi
 # pw: raspberry
 # ip: 129.168.42.1

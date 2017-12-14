@@ -13,6 +13,16 @@ html_mask = """<!DOCTYPE html>
 {}
 </body>"""
 
+delete_button = """<?php
+if ($_GET['run']) {{
+  # This code will run if ?run=true is set.
+  exec("rm {}");
+}}
+?>
+
+<!-- This link will add ?run=true to your URL, myfilename.php?run=true -->
+<a href="?run=true">delete</a>"""
+
 
 # def make_plot(plot_path, data, plot_name=None):
 #     """generates a .png plot file of data in plot_path
@@ -67,6 +77,10 @@ def make_plot(data, plot_path, plot_name):
     axarr[1].set_xlabel('Time [s]')
     # if os.path.isfile(plot_name):
     #     os.remove(plot_name)
+    f.tight_layout()
+    # axarr[1].locator_params(axis='x', tight=True, nbins=10)
+    plt.locator_params(axis='x', nbins=10)
+    plt.locator_params(axis='y', nbins=10)
     plt.savefig(plot_file, format='png')
     plt.close('all')
     return plot_file
@@ -137,9 +151,12 @@ def make_table(path):
     for file in all_files:
         if 'db' in file:
             db_files.append(file)
+
     table_string = '<br /> <table style=\"width:25%\">\n <tr> <th> previous data bases </th> </tr> \n'
     for file in db_files:
-        table_string += '<tr> <th> <a href=\"{}/{}\"> {} </a> </th> </tr> \n'.format(path, file, file)
+        full_path = '{}/{}'.format(path, file)
+        table_string += '<tr> <th> <a href={}> {} </a> </th> <th> {} </th> </tr> \n'\
+            .format(full_path, file, delete_button.format(full_path))
     table_string += '</table>'
     return table_string
 

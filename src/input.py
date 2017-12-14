@@ -40,8 +40,9 @@ def request_data(device, previous_index, debug=False):
     regex = r'(-?[0-9]+\.[0-9]+),\s(-?[0-9]+\.[0-9]+);\s(-?[0-9]+\.[0-9]+),\s(-?[0-9]+\.[0-9]+),\s(-?[0-9]+\.[0-9]+):\s([0-9]+)\\n'
     line = str(device.readline())
     while not re.findall(regex, line) \
-            or int(re.findall(regex, line)[0][5]) < previous_index \
-            or int(re.findall(regex, line)[0][5]) == 0:
+            or int(re.findall(regex, line)[0][5]) == previous_index:
+            # or int(re.findall(regex, line)[0][5]) != 0:
+        # or int(re.findall(regex, line)[0][5]) < previous_index \
         try:
             line = str(device.readline())
         except:
