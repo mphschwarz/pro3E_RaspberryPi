@@ -9,6 +9,7 @@ import src.archive
 def init_devs(dev_name=None, boud=115200, timeout=0.1):
     """:returns pointer to serial device"""
     if not dev_name:
+        # TODO test devices systematically
         try:
             return serial.Serial('/dev/ttyACM0', boud, timeout=timeout)
         except:

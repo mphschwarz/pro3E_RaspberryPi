@@ -19,7 +19,7 @@ def main(data_base, plot_interval, buffer_size, plot_path='.', out_path='.'):
     # cache_length = buffer_size
     if not data_base:
         last_db_index = 0
-        for file in os.listdir('output'):
+        for file in os.listdir(out_path):
             if 'db' in file and int(file.split('db')[1]) > last_db_index:
                 last_db_index = int(file.split('db')[1])
         data_base_name = '{}/db{}'.format(str(out_path), last_db_index + 1)
@@ -47,7 +47,6 @@ def main(data_base, plot_interval, buffer_size, plot_path='.', out_path='.'):
     data_base = open(data_base_name, 'a')
     data_base.write('{}; {}, {}; {}, {}, {}\n'.format(time.time(), '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'))
     while True:
-        t_start = time.time()
         data_point, previous_index = src.input.request_data(device, previous_index, debug=True)
         cache.append(data_point)
         if len(cache) > buffer_size:

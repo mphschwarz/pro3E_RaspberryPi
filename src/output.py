@@ -7,10 +7,18 @@ import src.archive
 html_mask = """<!DOCTYPE html>
 <html>
 <body>
+
 <h1> {} </h1>
-<img src={}>
-<img src={}>
-{}
+
+<table class="image">
+<tr><td><img src={}></td> <td><img src={}></td></tr>
+<tr><td class="caption">latest data</td> <td class="caption">total data</td></tr>
+<tr><td> black: total power </td><td> black: total power </td></tr>
+<tr><td> blue: real power </td><td> blue: real power </td></tr>
+<tr><td> red: imaginary power </td><td> red: imaginary power </td></tr>
+</table>
+
+{} <!-- This is where the table of data goes -->
 </body>"""
 
 delete_button = """<?php
@@ -24,37 +32,7 @@ if ($_GET['run']) {{
 <a href="?run=true">delete</a>"""
 
 
-# def make_plot(plot_path, data, plot_name=None):
-#     """generates a .png plot file of data in plot_path
-#     :returns path to plot file"""
-#     if not plot_name:
-#         plot_name = '{}/data_{}.png'.format(plot_path, data[0].time_stamp)
-#     else:
-#         plot_name = '{}/{}.png'.format(plot_path, plot_name)
-#     if os.path.isfile(plot_name):
-#         os.remove(plot_name)
-#     time_line = [data_point.time_stamp for data_point in data]
-#     plt.clf()
-#     plt.figure()
-#     f, axarr = plt.subplots(2)
-#
-#     axarr[0].plot(time_line, [data_point.voltage for data_point in data], color='green')
-#     axarr[0].set_ylabel('Voltage RMS [V]', color='green')
-#     axarr2 = axarr[0].twinx()
-#     axarr2.plot(time_line, [data_point.current for data_point in data],  'r-', color='blue')
-#     axarr2.set_ylabel('Currant RMS [A]', color='blue')
-#     axarr[1].plot(time_line, [data_point.total_power for data_point in data])
-#     axarr[1].plot(time_line, [data_point.real_power for data_point in data])
-#     axarr[1].plot(time_line, [data_point.imag_power for data_point in data])
-#     axarr[1].set_ylabel('Power [W]')
-#     axarr[1].set_xlabel('Time [s]')
-#     if os.path.isfile(plot_name):
-#         os.remove(plot_name)
-#     plt.savefig(plot_name, format='png')
-#     plt.close('all')
-#     return plot_name
-
-def make_plot(data, plot_path, plot_name):
+def make_plot(data, plot_path, plot_name, title=None):
     """writes plot to file
     :param data: namedTuple containing data
     :param plot_path: directory containing previous plot
@@ -64,15 +42,18 @@ def make_plot(data, plot_path, plot_name):
         os.remove(plot_file)
     plt.clf()
     plt.figure()
+
     f, axarr = plt.subplots(2)
     axarr[0].plot(data.time_stamp, data.voltage, color='green')
     axarr[0].set_ylabel('Voltage RMS [V]', color='green')
     axarr2 = axarr[0].twinx()
     axarr2.plot(data.time_stamp, data.current,  'r-', color='blue')
     axarr2.set_ylabel('Current RMS [A]', color='blue')
-    axarr[1].plot(data.time_stamp, data.total_power)
-    axarr[1].plot(data.time_stamp, data.real_power)
-    axarr[1].plot(data.time_stamp, data.imag_power)
+    if title:
+        plt.suptitle(title)
+    axarr[1].plot(data.time_stamp, data.total_power, color='black')
+    axarr[1].plot(data.time_stamp, data.real_power, color='blue')
+    axarr[1].plot(data.time_stamp, data.imag_power, color='red')
     axarr[1].set_ylabel('Power [W]')
     axarr[1].set_xlabel('Time [s]')
     # if os.path.isfile(plot_name):
@@ -86,56 +67,8 @@ def make_plot(data, plot_path, plot_name):
     return plot_file
 
 
-# def make_full_plot(data_path, plot_name, plot_path):
-#     """plots contents of text database"""
-#     if not plot_name:
-#         plot_name = '{}/data_{}.png'.format(plot_path, 'temp')
-#     else:
-#         plot_name = '{}/{}.png'.format(plot_path, plot_name)
-#     if os.path.isfile(plot_name):
-#         os.remove(plot_name)
-#     if os.path.isfile(plot_name):
-#         lines = open(plot_name, 'r').readlines()
-#     else:
-#         return plot_name
-#     time_stamp = []
-#     voltage = []
-#     current = []
-#     total_power = []
-#     real_power = []
-#     imag_power = []
-#     for line in lines:
-#         t, v, i, s, p, q = re.findall(src.archive.read_reg, line)[0]
-#         time_stamp.append(t)
-#         voltage.append(v)
-#         current.append(i)
-#         total_power.append(s)
-#         real_power.append(p)
-#         imag_power.append(q)
-#     plt.clf()
-#     plt.figure()
-#     f, axarr = plt.subplots(2)
-#     axarr[0].plot(time_stamp, voltage, color='green')
-#     axarr[0].set_ylabel('Voltage RMS [V]', color='green')
-#     axarr2 = axarr[0].twinx()
-#     axarr2.plot(time_stamp, current,  'r-', color='blue')
-#     axarr2.set_ylabel('Current RMS [A]', color='blue')
-#     axarr[1].plot(time_stamp, total_power)
-#     axarr[1].plot(time_stamp, real_power)
-#     axarr[1].plot(time_stamp, imag_power)
-#     axarr[1].set_ylabel('Power [W]')
-#     axarr[1].set_xlabel('Time [s]')
-#     if os.path.isfile(plot_name):
-#         os.remove(plot_name)
-#     plt.savefig(plot_name, format='png')
-#     plt.close('all')
-#     return plot_name
-#
-#
 def make_html(out_path, latest_plot, total_plot, site_name=None):
-    """generates html document showing a plot"""
     """uses a mask to generate a simple html file with title and data plot"""
-    # data = make_plot(out_path, data, plot_name=plot_name)
     if not site_name:
         site_name = '{}/data_site.html'.format(out_path)
     else:

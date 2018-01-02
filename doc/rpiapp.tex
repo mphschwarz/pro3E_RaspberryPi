@@ -1,0 +1,52 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Software auf dem RaspberryPi}
+Der RaspberryPi liest die vom Arduino gemessenen Daten über die serielle Schnittstelle ein, speichert sie und stellt sie in einer Website dar.
+Für die Datenverarbeitung wird Python 3.6 verwendet.
+\subsection{Datenverarbeitung}
+Die Daten werden
+
+\subsubsection{main.py}
+Im Modul main.py befindet sich der Einstiegspunkt des Skripts.
+Hier werden Argumente und Optionen des Commandline-Interfaces eingelesen verarbeitet.
+
+Der Commandline-Befehl "piapp" hat mehrere Argumente und Optionen, mit denen bestimmt werden kann, wie "piapp" sich verhalten soll.
+
+\begin{tabular}{l l}
+--data\_base     & bestimmt welche Datenbank erweitert werden soll. \\
+~                & Generiert eine neue Datenbank wenn keine Angaben gemacht werden. \\
+--plot\_path     & bestimmt wo die generierten Plots gespeicher werden soll. \\
+--out\_path      & bestimmt wo die generierte HTML-Seite gespeichert werden soll. \\
+--plot\_interval & bestimmt wie oft geplottet werden soll. \\
+~                & Werden keine Angaben gemacht wird alle 100 Samples geplottet. \\
+--buffer\_size   & bestimmt wie gross der im RAM gespeicherte Cache sein soll. \\
+~                & Werden keine Angaben gemacht, umfasst der Cache 1000 Samples. 
+\end{tabular}
+
+Die Funktion main enthält den Hauptprogrammfluss, der die im Arduino gemessenen Daten einliest, darstellt und speichert.
+In per Commandline-Option definierten Intervallen werden Plots der Daten im Cache und Plots der Daten im Flashdrive gemacht.
+
+\subsubsection{input.py}
+Das Modul input.py stellt alle für das Einlesen benötigten Funktionen bereit.
+
+Die Funktion init\_devs initialisiert die serielle Schnittstelle.
+Es probiert alle USB devices aus, bis es ein geeignetes Gerät gefunden hat.
+
+Die Funktion request\_data liest ein String über die serielle Schnittstelle ein.
+Es parsed den String mit einer Regex, die Spannung, Strom, Schein-, Wirk-, Blindleistung 
+
+\subsubsection{output.py}
+Das Modul output.py stellt alle für das Darstellen der Daten benötigten Funktionen bereit.
+
+Die Funktion make\_plot generiert ein .png-file, in dem die gegebenen Daten aufgezeichnet sind.
+Es werden dabei zwei Plots gemacht, einen für Strom und Spannung und einen für Schein-, Wirk- und Blindleistung.
+
+Die Funktion make\_html generiert ein .html-file, das zwei Plots und eine Liste der schon vorhandenen Daten enthält.
+
+Die Funktion make\_table generiert eine html-Tabelle mit allen Daten, die in früher gemessen wurden.
+
+Die Funktion make\_text kovertiert eine Liste von Messwerten in ein Text-file, das zum Download bereitgestellet werden kann.
+
+\end{document}
