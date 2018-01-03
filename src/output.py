@@ -38,8 +38,8 @@ def make_plot(data, plot_path, plot_name, title=None):
     :param plot_path: directory containing previous plot
     :param plot_name: plot name"""
     plot_file = '{}/{}.png'.format(plot_path, plot_name)
-    if os.path.isfile(plot_file):   # removes old plot
-        os.remove(plot_file)
+    # if os.path.isfile(plot_file):   # removes old plot
+    #     os.remove(plot_file)
     plt.clf()
     plt.figure()
 
@@ -74,7 +74,8 @@ def make_html(out_path, latest_plot, total_plot, site_name=None):
     else:
         site_name = '{}/{}.html'.format(out_path, site_name)
     out_file = open(site_name, 'w')
-    out_file.write(html_mask.format('Power Consumption', latest_plot, total_plot, make_table(out_path)))
+    # out_file.write(html_mask.format('Power Consumption', latest_plot, total_plot, make_table(out_path)))
+    out_file.write(html_mask.format('Power Consumption', '/latest.png', '/total.png', make_table(out_path)))
     out_file.close()
     return site_name
 
