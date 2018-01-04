@@ -4,10 +4,8 @@
 
 \section{Software auf dem RaspberryPi}
 Der RaspberryPi liest die vom Arduino gemessenen Daten über die serielle Schnittstelle ein, speichert sie und stellt sie in einer Website dar.
-Für die Datenverarbeitung wird Python 3.6 verwendet.
+Für die Datenverarbeitung wird Python 3.6 verwendet und das Programm piapp wird mit xvbf-run ausgeführt, da dem Programm im headless-Modus keinen X-server zur verfügung steht.
 \subsection{Datenverarbeitung}
-Die Daten werden
-
 \subsubsection{main.py}
 Im Modul main.py befindet sich der Einstiegspunkt des Skripts.
 Hier werden Argumente und Optionen des Commandline-Interfaces eingelesen verarbeitet.
@@ -49,12 +47,24 @@ Die Funktion make\_table generiert eine html-Tabelle mit allen Daten, die in fr�
 
 Die Funktion make\_text kovertiert eine Liste von Messwerten in ein Text-file, das zum Download bereitgestellet werden kann.
 
-\subsection{archive.py}
+\subsubsection{archive.py}
 Das Modul archive.py stellt das Objekt DataPoint bereit, das die Messwerte einer Messung beinhaltet.
 
 Die Funktion make\_text\_file schreibt die Werte einer Liste von DataPoints in ein Text-File.
 
 Die Funktion read\_text\_file liest die Werte einer Liste von DataPoints aus einem Text-File.
 
+\subsection{W-Lan Hotspot}
+Damit die Website mit den Daten vom Nutzer gesehen werden kann, hat der RaspberryPi ein eigenes W-Lan-Netzwerk mit der SSID WiPi.
+Zudem kann der RaspberryPi mit einem Ethernetkabel mit einen Router mit Internetanschluss verbunden werden, sollte der RaspberryPi Internet benötigen.
+
+Für den W-Lan-hotspot und DHCP-Server wurde hostapd, hostap-utils, iw und bridge-utils aus dem Raspbian-Repository installiert.
+
+\subsection{Webserver}
+Die Website mit den Daten wird von einem Apache2-Server gehosted.
+Der Apache2-Webserver wurde aus dem Raspbian-Repository installiert und mit symbolischen Links so konfiguriert, dass er zwei Plots und eine Liste von alten Messdaten auf seiner Homepage darstellt.
+
+Die Homepage kann aufgerufen werden, indem man die IP-Adresse des Routers in einem Webbrowser eingibt.
+Ist man direkt über den W-Lan-hotspot des RaspberryPis verbunden lautet die IP-Adresse 192.168.42.1, ist der RaspberryPi per Ethernet an einem Router angeschlossen, wird die IP-Adresse vom Router bestimmt.
 
 \end{document}
