@@ -1,4 +1,9 @@
 \documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[nswissgerman]{babel}
+\usepackage[top=1.5cm, bottom=1.5cm, right=1.5cm, left=1.5cm]{geometry}
 
 \begin{document}
 
@@ -6,11 +11,18 @@
 Der RaspberryPi liest die vom Arduino gemessenen Daten über die serielle Schnittstelle ein, speichert sie und stellt sie in einer Website dar.
 Für die Datenverarbeitung wird Python 3.6 verwendet und das Programm piapp wird mit xvbf-run ausgeführt, da dem Programm im headless-Modus keinen X-server zur verfügung steht.
 \subsection{Datenverarbeitung}
+Die Datenverarbeitung wird mit dem Programm 'piapp' durchgeführt.
+'piapp' wurde in Python 3.6 programmiert und kann von der Linux-Comandline aufgerufen werden.
+Damit 'piapp' automatisch nach dem Boot-Prozess ausgeführt wird, wurde es zu den /etc/init.d/-Skripts hinzugefügt.
+
+Da 'piapp' ohne einem X-Display-Server funktionieren muss, nutzt 'piapp' das Programm xvbf-run.
+Xvbf-run wurde aus dem Raspbian-Repository installiert und
+
 \subsubsection{main.py}
 Im Modul main.py befindet sich der Einstiegspunkt des Skripts.
 Hier werden Argumente und Optionen des Commandline-Interfaces eingelesen verarbeitet.
 
-Der Commandline-Befehl "piapp" hat mehrere Argumente und Optionen, mit denen bestimmt werden kann, wie "piapp" sich verhalten soll.
+Der Commandline-Befehl 'piapp' hat mehrere Argumente und Optionen, mit denen bestimmt werden kann, wie 'piapp' sich verhalten soll.
 
 \begin{tabular}{l l}
 --data\_base     & bestimmt welche Datenbank erweitert werden soll. \\
@@ -25,6 +37,13 @@ Der Commandline-Befehl "piapp" hat mehrere Argumente und Optionen, mit denen bes
 
 Die Funktion main enthält den Hauptprogrammfluss, der die im Arduino gemessenen Daten einliest, darstellt und speichert.
 In per Commandline-Option definierten Intervallen werden Plots der Daten im Cache und Plots der Daten im Flashdrive gemacht.
+
+\subsubsection{\_\_init\_\_.py}
+Das Modul \_\_init\_\_.py stellt das Objekt DataPoint bereit, das die Messwerte einer Messung beinhaltet.
+
+Die Funktion make\_text\_file schreibt die Werte einer Liste von DataPoints in ein Text-File.
+
+Die Funktion read\_text\_file liest die Werte einer Liste von DataPoints aus einem Text-File.
 
 \subsubsection{input.py}
 Das Modul input.py stellt alle für das Einlesen benötigten Funktionen bereit.
@@ -46,13 +65,6 @@ Die Funktion make\_html generiert ein .html-file, das zwei Plots und eine Liste 
 Die Funktion make\_table generiert eine html-Tabelle mit allen Daten, die in früher gemessen wurden.
 
 Die Funktion make\_text kovertiert eine Liste von Messwerten in ein Text-file, das zum Download bereitgestellet werden kann.
-
-\subsubsection{archive.py}
-Das Modul archive.py stellt das Objekt DataPoint bereit, das die Messwerte einer Messung beinhaltet.
-
-Die Funktion make\_text\_file schreibt die Werte einer Liste von DataPoints in ein Text-File.
-
-Die Funktion read\_text\_file liest die Werte einer Liste von DataPoints aus einem Text-File.
 
 \subsection{W-Lan Hotspot}
 Damit die Website mit den Daten vom Nutzer gesehen werden kann, hat der RaspberryPi ein eigenes W-Lan-Netzwerk mit der SSID WiPi.

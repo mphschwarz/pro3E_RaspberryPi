@@ -4,8 +4,6 @@ import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 
-import src.archive
-
 html_mask = """<!DOCTYPE html>
 <html>
 <body>
@@ -38,10 +36,9 @@ def make_plot(data, plot_path, plot_name, title=None):
     """writes plot to file
     :param data: namedTuple containing data
     :param plot_path: directory containing previous plot
-    :param plot_name: plot name"""
+    :param plot_name: plot name
+    :param title: title above plots"""
     plot_file = '{}/{}.png'.format(plot_path, plot_name)
-    # if os.path.isfile(plot_file):   # removes old plot
-    #     os.remove(plot_file)
     plt.clf()
     plt.figure()
 
@@ -58,10 +55,7 @@ def make_plot(data, plot_path, plot_name, title=None):
     axarr[1].plot(data.time_stamp, data.imag_power, color='red')
     axarr[1].set_ylabel('Power [W]')
     axarr[1].set_xlabel('Time [s]')
-    # if os.path.isfile(plot_name):
-    #     os.remove(plot_name)
     f.tight_layout()
-    # axarr[1].locator_params(axis='x', tight=True, nbins=10)
     plt.locator_params(axis='x', nbins=10)
     plt.locator_params(axis='y', nbins=10)
     plt.savefig(plot_file, format='png')
@@ -69,15 +63,14 @@ def make_plot(data, plot_path, plot_name, title=None):
     return plot_file
 
 
-def make_html(out_path, latest_plot, total_plot, site_name=None):
+def make_html(out_path, latest_plot='/latest.png', total_plot='/total.png', site_name=None):
     """uses a mask to generate a simple html file with title and data plot"""
     if not site_name:
         site_name = '{}/data_site.html'.format(out_path)
     else:
         site_name = '{}/{}.html'.format(out_path, site_name)
     out_file = open(site_name, 'w')
-    # out_file.write(html_mask.format('Power Consumption', latest_plot, total_plot, make_table(out_path)))
-    out_file.write(html_mask.format('Power Consumption', '/latest.png', '/total.png', make_table(out_path)))
+    out_file.write(html_mask.format('Power Consumption', latest_plot, total_plot, make_table(out_path)))
     out_file.close()
     return site_name
 

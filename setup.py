@@ -11,12 +11,14 @@ import unittest
 setup(
         name='piapp',
         py_modules=['src.main',
-                    'src.archive',
+                    # 'src.archive',
                     'src.output',
                     'src.input'],
         install_requires=['matplotlib',
                           'click',
-                          'pyusb'],
+                          'pyusb',
+                          'pycairo',
+                          'cairocffi'],
         entry_points={
             'console_scripts': [
                 'piapp=src.main:main',

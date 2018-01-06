@@ -3,7 +3,7 @@ import serial
 import time
 import re
 
-import src.archive
+import src
 
 
 def init_devs(dev_name=None, boud=115200, timeout=0.1):
@@ -12,7 +12,7 @@ def init_devs(dev_name=None, boud=115200, timeout=0.1):
         # TODO test devices systematically
         try:
             return serial.Serial('/dev/ttyACM0', boud, timeout=timeout)
-        except:
+        except serial.serialutil.SerialException:
             return serial.Serial('/dev/ttyACM1', boud, timeout=timeout)
     else:
         return serial.Serial(dev_name, boud, timeout=timeout)
@@ -49,13 +49,11 @@ def request_data(device, previous_index, debug=False):
         except:
             time.sleep(0.000001)
 
-    # while line == 'b\'\'':
-    #     line = str(device.readline())
     data = re.findall(regex, line)
     if data != []:
         if debug:
             click.echo('index: {}, V: {}, I: {}, S: {}, P: {}, Q: {}'.format(previous_index, data[0][0], data[0][1],
                                                                              data[0][2], data[0][3], data[0][4]))
-        return src.archive.DataPoint(data[0][0], data[0][1], data[0][2], data[0][3], data[0][4]), int(data[0][-1])
+        return src.DataPoint(data[0][0], data[0][1], data[0][2], data[0][3], data[0][4]), int(data[0][-1])
     else:
         return None
