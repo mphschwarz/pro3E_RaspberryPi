@@ -9,10 +9,15 @@
 
 \section{Software auf dem RaspberryPi}
 Der RaspberryPi liest die vom Arduino gemessenen Daten über die serielle Schnittstelle ein, speichert sie und stellt sie in einer Website dar.
-Für die Datenverarbeitung wird Python 3.6 verwendet und das Programm piapp wird mit xvbf-run ausgeführt, da dem Programm im headless-Modus keinen X-server zur verfügung steht.
+Für die Datenverarbeitung wird Python 3.6 verwendet und das Programm piapp wird mit xvbf-run ausgeführt, da dem Programm im headless-Modus keinen X-Server zur Verfügung steht.
+
+Der RaspberryPi wurde verwendet, weil er ein W-Lan-Modul und USB-Schnittstellen schon eingebaut hat und einen Webserver betreiben kann.
+Unter dem Strich war es günstiger ein RaspberryPi zu verwenden, als ein einfacheres Board mit den benötigten Modulen auszurüsten.
+Zudem ist die Softwareentwicklung auf dem RaspberryPi erleichtert, da er ein volles Linux-Betriebssystem hat, mit dem sich ein Teil des Teams schon auskannte.
+
 \subsection{Datenverarbeitung}
 Die Datenverarbeitung wird mit dem Programm 'piapp' durchgeführt.
-'piapp' wurde in Python 3.6 programmiert und kann von der Linux-Comandline aufgerufen werden.
+'piapp' wurde in Python 3.6 programmiert und kann von der Linux-Commandline aufgerufen werden.
 Damit 'piapp' automatisch nach dem Boot-Prozess ausgeführt wird, wurde es zu den /etc/init.d/-Skripts hinzugefügt.
 
 Da 'piapp' ohne einem X-Display-Server funktionieren muss, nutzt 'piapp' das Programm xvbf-run.
@@ -27,7 +32,7 @@ Der Commandline-Befehl 'piapp' hat mehrere Argumente und Optionen, mit denen bes
 \begin{tabular}{l l}
 --data\_base     & bestimmt welche Datenbank erweitert werden soll. \\
 ~                & Generiert eine neue Datenbank wenn keine Angaben gemacht werden. \\
---plot\_path     & bestimmt wo die generierten Plots gespeicher werden soll. \\
+--plot\_path     & bestimmt wo die generierten Plots gespeichert werden soll. \\
 --out\_path      & bestimmt wo die generierte HTML-Seite gespeichert werden soll. \\
 --plot\_interval & bestimmt wie oft geplottet werden soll. \\
 ~                & Werden keine Angaben gemacht wird alle 100 Samples geplottet. \\
