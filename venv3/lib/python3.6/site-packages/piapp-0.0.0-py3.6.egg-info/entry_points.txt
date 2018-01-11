@@ -1,0 +1,3 @@
+[console_scripts]
+piapp = src.main:main
+

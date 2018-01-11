@@ -1,0 +1,5 @@
+matplotlib
+click
+pyusb
+pycairo
+cairocffi
