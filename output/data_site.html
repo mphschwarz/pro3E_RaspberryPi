@@ -14,50 +14,17 @@
 
 <br /> <table style="width:25%">
  <tr> <th> previous data bases </th> </tr> 
-<tr> <th> <a href=../output/db0> db0 </a> </th> <th> <?php
-if ($_GET['run']) {
-  # This code will run if ?run=true is set.
-  exec("rm ../output/db0");
-}
+<tr> <th> <a href=../output/db0> db0 </a> </th> <th> <a href=../output/db0plot.png> db0plot.png </a> </th> <th> <?php
+delete(../output/db0)
 ?>
-
-<!-- This link will add ?run=true to your URL, myfilename.php?run=true -->
 <a href="?run=true">delete</a> </th> </tr> 
-<tr> <th> <a href=../output/db4> db4 </a> </th> <th> <?php
-if ($_GET['run']) {
-  # This code will run if ?run=true is set.
-  exec("rm ../output/db4");
-}
+<tr> <th> <a href=../output/db1> db1 </a> </th> <th> <a href=../output/db1plot.png> db1plot.png </a> </th> <th> <?php
+delete(../output/db1)
 ?>
-
-<!-- This link will add ?run=true to your URL, myfilename.php?run=true -->
 <a href="?run=true">delete</a> </th> </tr> 
-<tr> <th> <a href=../output/db1> db1 </a> </th> <th> <?php
-if ($_GET['run']) {
-  # This code will run if ?run=true is set.
-  exec("rm ../output/db1");
-}
+<tr> <th> <a href=../output/db2> db2 </a> </th> <th> <a href=../output/db2plot.png> db2plot.png </a> </th> <th> <?php
+delete(../output/db2)
 ?>
-
-<!-- This link will add ?run=true to your URL, myfilename.php?run=true -->
-<a href="?run=true">delete</a> </th> </tr> 
-<tr> <th> <a href=../output/db3> db3 </a> </th> <th> <?php
-if ($_GET['run']) {
-  # This code will run if ?run=true is set.
-  exec("rm ../output/db3");
-}
-?>
-
-<!-- This link will add ?run=true to your URL, myfilename.php?run=true -->
-<a href="?run=true">delete</a> </th> </tr> 
-<tr> <th> <a href=../output/db2> db2 </a> </th> <th> <?php
-if ($_GET['run']) {
-  # This code will run if ?run=true is set.
-  exec("rm ../output/db2");
-}
-?>
-
-<!-- This link will add ?run=true to your URL, myfilename.php?run=true -->
 <a href="?run=true">delete</a> </th> </tr> 
 </table> <!-- This is where the table of data goes -->
 </body>

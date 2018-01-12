@@ -22,13 +22,8 @@ html_mask = """<!DOCTYPE html>
 </body>"""
 
 delete_button = """<?php
-if ($_GET['run']) {{
-  # This code will run if ?run=true is set.
-  exec("rm {}");
-}}
+delete({})
 ?>
-
-<!-- This link will add ?run=true to your URL, myfilename.php?run=true -->
 <a href="?run=true">delete</a>"""
 
 
@@ -77,15 +72,21 @@ def make_html(out_path, latest_plot='/latest.png', total_plot='/total.png', site
 def make_table(path):
     all_files = os.listdir(path)
     db_files = []
+    plot_files = []
     for file in all_files:
-        if 'db' in file:
+        if 'db' in file and 'plot' not in file:
             db_files.append(file)
+        if 'db' in file and 'plot' in file:
+            plot_files.append(file)
+    db_files.sort()
+    plot_files.sort()
 
     table_string = '<br /> <table style=\"width:25%\">\n <tr> <th> previous data bases </th> </tr> \n'
-    for file in db_files:
-        full_path = '{}/{}'.format(path, file)
-        table_string += '<tr> <th> <a href={}> {} </a> </th> <th> {} </th> </tr> \n'\
-            .format(full_path, file, delete_button.format(full_path))
+    for filenumber, file in enumerate(db_files):
+        full_db_path = '{}/{}'.format(path, db_files[filenumber])
+        full_plot_path = '{}/{}'.format(path, plot_files[filenumber])
+        table_string += '<tr> <th> <a href={}> {} </a> </th> <th> <a href={}> {} </a> </th> <th> {} </th> </tr> \n'\
+            .format(full_db_path, db_files[filenumber], full_plot_path, plot_files[filenumber], delete_button.format(full_db_path))
     table_string += '</table>'
     return table_string
 

@@ -8,20 +8,23 @@ import src.output
 
 
 @click.command()
-@click.option('--data_base', type=str, default=None, help='database to be extended')
+# @click.option('--data_base', type=str, default=None, help='database to be extended')
 @click.option('--plot_path', type=click.Path(exists=True), help='directory for plots')
 @click.option('--out_path', type=click.Path(exists=True), help='directory for html files')
 @click.option('--plot_interval', type=int, default=100, help='sample intervall with which a plot is made')
 @click.option('--buffer_size', type=int, default=1000, help='number of samples in buffer')
-def main(data_base, plot_interval, buffer_size, plot_path='.', out_path='.'):
-    if not data_base:
-        last_db_index = 0
-        for file in os.listdir(out_path):
-            if 'db' in file and int(file.split('db')[1]) > last_db_index:
-                last_db_index = int(file.split('db')[1])
-        data_base_name = '{}/db{}'.format(str(out_path), last_db_index + 1)
-    else:
-        data_base_name = data_base
+def main(plot_interval, buffer_size, plot_path='.', out_path='.'):
+    last_db_index = 0
+    for file in os.listdir(out_path):
+        if 'db' in file and 'plot' not in file and int(file.split('db')[1]) > last_db_index:
+            last_db_index = int(file.split('db')[1])
+    last_db_index += 1
+
+    data_base_name = '{}/db{}'.format(str(out_path), last_db_index)
+
+    total_db_plot = open('{}/db{}plot.png'.format(str(out_path), last_db_index), 'w')
+    total_db_plot.close()
+
     cache = []
     device = src.input.init_devs()
     count = 0
@@ -30,6 +33,7 @@ def main(data_base, plot_interval, buffer_size, plot_path='.', out_path='.'):
     latest_plot = '{}/total.png'.format(plot_path)
     data_base = open(data_base_name, 'a')
     data_base.write('{}; {}, {}; {}, {}, {}\n'.format(time.time(), '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'))
+
     while True:
         data_point, previous_index = src.input.request_data(device, previous_index, debug=True)
         cache.append(data_point)
@@ -50,16 +54,12 @@ def main(data_base, plot_interval, buffer_size, plot_path='.', out_path='.'):
                     plot_name='latest')
             src.output.make_html(out_path, latest_plot, total_plot)
         if count % plot_interval == 0:  # plots all data
-            total_plot = src.output.make_plot(
-                    src.read_data_set(data_base_name),
-                    # src.DataSet([data_point.time_stamp for data_point in cache],
-                    #                     [data_point.voltage for data_point in cache],
-                    #                     [data_point.current for data_point in cache],
-                    #                     [data_point.total_power for data_point in cache],
-                    #                     [data_point.real_power for data_point in cache],
-                    #                     [data_point.imag_power for data_point in cache]),
-                    plot_path,
-                    plot_name='total')
+            total_plot = src.output.make_plot(src.read_data_set(data_base_name),
+                                              plot_path,
+                                              plot_name='total')
+            total_db_plot = src.output.make_plot(src.read_data_set(data_base_name),
+                                                 plot_path,
+                                                 plot_name='db{}plot'.format(last_db_index))
             # src.output.make_full_plot(data_base, plot_name='total', plot_path=plot_path)
 
         # time.sleep(time.time() - t_start)
