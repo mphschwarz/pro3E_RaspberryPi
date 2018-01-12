@@ -32,7 +32,8 @@ def main(plot_interval, buffer_size, plot_path='.', out_path='.'):
     total_plot = '{}/latest.png'.format(plot_path)
     latest_plot = '{}/total.png'.format(plot_path)
     data_base = open(data_base_name, 'a')
-    data_base.write('{}; {}, {}; {}, {}, {}\n'.format(time.time(), '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'))
+    data_base.write(' ')
+    # data_base.write('{}; {}, {}; {}, {}, {}\n'.format(time.time(), '0.00', '0.00', '0.00', '0.00', '0.00', '0.00'))
 
     while True:
         data_point, previous_index = src.input.request_data(device, previous_index, debug=True)
