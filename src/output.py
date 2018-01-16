@@ -85,8 +85,6 @@ def make_table(path):
     for filenumber, file in enumerate(db_files):
         full_db_path = '{}/{}'.format(path, db_files[filenumber])
         full_plot_path = '{}/{}'.format(path, plot_files[filenumber])
-        # table_string += '<tr> <th> <a href={}> {} </a> </th> <th> <a href={}> {} </a> </th> <th> {} </th> </tr> \n'\
-        #     .format(full_db_path, db_files[filenumber], full_plot_path, plot_files[filenumber], delete_button.format(full_db_path))
         table_string += '<tr> <th> <a href={}> {} </a> </th> <th> <a href={}> {} </a> </th> </tr> \n'\
             .format(full_db_path, db_files[filenumber], full_plot_path, plot_files[filenumber])
     table_string += '</table>'
