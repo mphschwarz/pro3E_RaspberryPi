@@ -1,0 +1,48 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[nswissgerman]{babel}
+\usepackage{hyperref}
+\usepackage[top=1.5cm, bottom=1.5cm, right=1.5cm, left=1.5cm]{geometry}
+
+\title{Betriebsanleitung}
+\author{Michael Schwarz}
+
+\begin{document}
+
+\maketitle
+
+\section{Start-Up}
+\begin{enumerate}
+\item Den Verbraucher in die Buchse des Messgeräts einstecken und das Messgerät in eine Stromsteckdose einstecken.
+\item Mit dem Schalter den gewünschten Strommessbereich auswählen: \\
+	\begin{tabular}{c l}
+		(I) & für Ströme bis 1 A \\
+		(II) & für Ströme über 1 A.
+	\end{tabular}
+\item Leuchtet die StatusLED ist das Messgerät in Betrieb.
+\end{enumerate}
+
+\section{Shutdown}
+\begin{enumerate}
+	\item Den Shutdown-Taster für 5 s drücken, Taster loslassen und 10 s warten.
+	\item Verbraucher und Messgerät trennen.
+\end{enumerate}
+
+\section{Daten auslesen}
+\begin{enumerate}
+	\item Computer oder Mobiltelefon mit W-LAN-hotspot des Messgeräts verbinden. \\
+		\begin{tabular}{l l}
+			SSID: & WiPi \\
+			Passwort: & blackberry
+		\end{tabular}
+	\item Per Internetbrowser (Google Chrome oder Mozilla Firefox) auf die IP-Adresse des W-Lan-hotspots navigieren: \\
+		\url{192.168.42.1}
+	\item Für die neusten Daten muss der Browser einen hard-refresh machen: Ctrl+f5
+	\item Die laufende Messung wird oben mit zwei Plots beschrieben. 
+		Ältere Messdaten sind unter den Plots verlinkt.
+		Die von den äleteren Messdaten sind Textdateien sowie Plots verfügbar.
+\end{enumerate}
+\end{document}
