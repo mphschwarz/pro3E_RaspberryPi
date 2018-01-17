@@ -5,6 +5,7 @@
 \usepackage{lmodern}
 \usepackage[nswissgerman]{babel}
 \usepackage{hyperref}
+\usepackage{graphicx}
 \usepackage[top=1.5cm, bottom=1.5cm, right=1.5cm, left=1.5cm]{geometry}
 
 \title{Betriebsanleitung}
@@ -19,15 +20,15 @@
 \item Den Verbraucher in die Buchse des Messgeräts einstecken und das Messgerät in eine Stromsteckdose einstecken.
 \item Mit dem Schalter den gewünschten Strommessbereich auswählen: \\
 	\begin{tabular}{c l}
-		(I) & für Ströme bis 1 A \\
-		(II) & für Ströme über 1 A.
+		(I)  & für Ströme bis 1 A   \\
+		(II) & für Ströme über 1 A. \\
 	\end{tabular}
 \item Leuchtet die StatusLED ist das Messgerät in Betrieb.
 \end{enumerate}
 
 \section{Shutdown}
 \begin{enumerate}
-	\item Den Shutdown-Taster für 5 s drücken, Taster loslassen und 10 s warten.
+	\item Den Shutdown-Taster drücken, bis die LED erlischt. Taster loslassen und ca. 10 s warten.
 	\item Verbraucher und Messgerät trennen.
 \end{enumerate}
 
@@ -35,14 +36,22 @@
 \begin{enumerate}
 	\item Computer oder Mobiltelefon mit W-LAN-hotspot des Messgeräts verbinden. \\
 		\begin{tabular}{l l}
-			SSID: & WiPi \\
-			Passwort: & blackberry
+			SSID:     & WiPi      \\
+			Passwort: & raspberry \\
 		\end{tabular}
 	\item Per Internetbrowser (Google Chrome oder Mozilla Firefox) auf die IP-Adresse des W-Lan-hotspots navigieren: \\
 		\url{192.168.42.1}
 	\item Für die neusten Daten muss der Browser einen hard-refresh machen: Ctrl+f5
 	\item Die laufende Messung wird oben mit zwei Plots beschrieben. 
 		Ältere Messdaten sind unter den Plots verlinkt.
-		Die von den äleteren Messdaten sind Textdateien sowie Plots verfügbar.
+		Die äleteren Messdaten sind als Textdateien sowie Plots verfügbar.
 \end{enumerate}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.75\textwidth, angle=-90]{manual_deckel.jpeg}
+	\caption{Deckel des Messgeräts}
+	\label{deckel}
+\end{figure}
+
 \end{document}
