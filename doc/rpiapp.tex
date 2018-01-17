@@ -20,6 +20,12 @@ Die Datenverarbeitung wird mit dem Programm 'piapp' durchgeführt.
 'piapp' wurde in Python 3.6 programmiert und kann von der Linux-Commandline aufgerufen werden.
 Damit 'piapp' automatisch nach dem Boot-Prozess ausgeführt wird, wurde es zu den /etc/init.d/-Skripts hinzugefügt.
 
+Der RaspberryPi nutzt eine SD-Karte als Hauptspeicher, die bei plötzlichem Stromausfall kapputt gehen kann.
+Damit dies nicht passieren kann speichert 'piapp' alle Daten auf einem externen USB-Flashdrive und das Messgerät hat einen Shutdown-Taster und Aktivitäts-LED.
+Nach dem Boot-Prozess wird die Aktivitäts-LED angeschaltet, was dem Nutzer signalisiert, dass das Messgerät im Betrieb ist und nicht Strom verlieren darf.
+Will der Nutzer das Gerät herunterfahren, muss er den Shutdown-Taster drücken, bis die Aktivitäts-LED erlischit.
+Ist die Aktivitäts-LED aus, wurde der bash-Befehl 'sudo halt' ausgeführt, der verhindert, dass die SD-Karte beschreibt wird und somit sicher ist.
+
 Da 'piapp' ohne einem X-Display-Server funktionieren muss, nutzt 'piapp' das Programm xvbf-run.
 Xvbf-run wurde aus dem Raspbian-Repository installiert.
 
