@@ -38,7 +38,12 @@ def request_data(device, previous_index, debug=False):
     :param previous_index: index of previous message, to prevent multiple reading of the same sample
     :param debug: prints ingested sample data
     :returns reads data from serial device"""
-    regex = r'(-?[0-9]+\.[0-9]+),\s(-?[0-9]+\.[0-9]+);\s(-?[0-9]+\.[0-9]+),\s(-?[0-9]+\.[0-9]+),\s(-?[0-9]+\.[0-9]+):\s([0-9]+)\\n'
+    regex = r'(-?[0-9]+\.[0-9]+),\s' + \
+            r'(-?[0-9]+\.[0-9]+);\s' + \
+            r'(-?[0-9]+\.[0-9]+),\s' + \
+            r'(-?[0-9]+\.[0-9]+),\s' + \
+            r'(-?[0-9]+\.[0-9]+):\s' + \
+            r'([0-9]+)\\n'
     line = str(device.readline())
     while not re.findall(regex, line) \
             or int(re.findall(regex, line)[0][5]) == previous_index:

@@ -1,14 +1,11 @@
-import time
 import os
 import click
 
-# import src.archive
 import src.input
 import src.output
 
 
 @click.command()
-# @click.option('--data_base', type=str, default=None, help='database to be extended')
 @click.option('--plot_path', type=click.Path(exists=True), help='directory for plots')
 @click.option('--out_path', type=click.Path(exists=True), help='directory for html files')
 @click.option('--plot_interval', type=int, default=100, help='sample intervall with which a plot is made')
@@ -61,9 +58,7 @@ def main(plot_interval, buffer_size, plot_path='.', out_path='.'):
             total_db_plot = src.output.make_plot(src.read_data_set(data_base_name),
                                                  plot_path,
                                                  plot_name='db{}plot'.format(last_db_index))
-            # src.output.make_full_plot(data_base, plot_name='total', plot_path=plot_path)
 
-        # time.sleep(time.time() - t_start)
         count += 1
 
 
